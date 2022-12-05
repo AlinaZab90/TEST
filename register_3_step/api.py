@@ -2,7 +2,7 @@
 import logging
 from jsonschema import validate
 
-from register_3_step.requests import Client
+from register_3_step.requests_ import Client
 from register_3_step.models import ResponseModel
 
 logger = logging.getLogger("api")

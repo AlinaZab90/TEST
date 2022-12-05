@@ -1,20 +1,22 @@
 import requests
-import xml.etree.ElementTree as ET
+from lxml import etree
+from io import StringIO
 
 session = requests.Session()
+login = session.get("http://dev.getdesk.com/login").text
 
-link = "http://dev.getdesk.com/sign_in"
+parser = etree.HTMLParser()
+tree   = etree.parse(StringIO(login), parser)
 
-login = requests.get("http://dev.getdesk.com/login").text
+r = tree.xpath(".//input[@name='_token']")
 
-root = ET.fromstring(login)
-t = root.find(".//input[@name='_token']")
-#print(t)
-headers = {'X-CSRF-Token':"random"}
+
+headers = {'X-CSRF-Token':r[0].attrib['value']}
 
 datas = {
     'email': '...',
     'password': '...'
 }
 
-responce = session.post(link, data = datas, headers = headers).text
+responce = session.post("http://dev.getdesk.com/sign_in", data = datas, headers = headers).text
+print(responce)
