@@ -20,7 +20,7 @@ datas = {
 
 response= session.post("http://dev.getdesk.com/sign_in", data = datas, headers = headers).text
 
-response = session.post("http://dev.getdesk.com/xhr/office")
-print(response.status_code)
-print(response.text)
+office = session.post("http://dev.getdesk.com/xhr/office")
+print(office.status_code)
+print(office.text)
 
