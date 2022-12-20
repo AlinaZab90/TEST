@@ -26,8 +26,9 @@ response= session.post("http://dev.getdesk.com/sign_in", data = datas, headers =
 #office = session.post("http://dev.getdesk.com/xhr/office")
 #print(office.status_code)
 #office_id = json.loads(office.text)["id"]
+
 office_id = 165
-url_space ='http://dev.getdesk.com/xhr/office/{office}/space'.format(office=165)
+url_space ='http://dev.getdesk.com/xhr/office/{office}/space'.format(office=office_id)
 space = {
     "id":2,
     "name":"Jjj",
@@ -81,11 +82,15 @@ space = {
     "disabled":False}
 
 #print(space.keys())
-#key = (space.items)
+#print(space.items())
+
+#response_space = session.post(url_space, json= space)
+#print(response_space.text)
+#type_id = json.loads(response_space.text)["id"]
+type_id = 321
 
 
-response_space = session.post(url_space, space, headers = {'Content-Type': 'application/json'})
-print(response_space.text)
+
 
 
 
