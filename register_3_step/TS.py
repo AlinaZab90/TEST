@@ -14,7 +14,7 @@ tree   = etree.parse(StringIO(login), parser)
 r = tree.xpath(".//input[@name='_token']")
 
 
-headers = {'X-CSRF-Token':r[0].attrib['value']}
+headers = {'X-CSRF-Token': r[0].attrib['value']}
 
 datas = {
     'email': 'alina.zabaidulina@mail.ru',
@@ -81,15 +81,36 @@ space = {
     "images":[],
     "disabled":False}
 
-#print(space.keys())
-#print(space.items())
+print(space.keys())
+print(space.items())
 
-#response_space = session.post(url_space, json= space)
-#print(response_space.text)
-#type_id = json.loads(response_space.text)["id"]
-type_id = 321
+response_space = session.post(url_space, json= space)
+print(response_space.text)
+type_id = json.loads(response_space.text)["id"]
+#type_id = 321
+
+url2 = "http://dev.getdesk.com/xhr/booking"
+booking = {
+    "booking_office_space_ids_count": [
+        {
+            "id": type_id,
+            "count": 1
+        }
+    ],
+    "booking_begin": "2023-9-10T12:15:00",
+    "booking_end": "2023-9-15T12:15:00",
+    "localtime": "2023-9-15T12:15:00"
+}
+reserv = session.post(url2, json=booking, data = datas, headers = headers)
+print(reserv.text)
+booking_id = json.loads(reserv.text)["id"]
+print(booking_id)
 
 
+resp_booking = session.get("http://dev.getdesk.com/xhr/order/90").text
+datesRange = json.loads(resp_booking)["datesRange"]
+
+print(datesRange)
 
 
 
