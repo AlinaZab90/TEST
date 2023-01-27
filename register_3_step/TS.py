@@ -3,6 +3,7 @@ import requests
 from lxml import etree
 from io import StringIO
 import json
+import pprint
 
 
 session = requests.Session()
@@ -17,8 +18,8 @@ r = tree.xpath(".//input[@name='_token']")
 headers = {'X-CSRF-Token': r[0].attrib['value']}
 
 datas = {
-    'email': 'alina.zabaidulina@mail.ru',
-    'password': 'hxt6LtkLpNFBcWu'
+    'email': '...',
+    'password': '...'
 }
 
 response= session.post("http://dev.getdesk.com/sign_in", data = datas, headers = headers).text
@@ -81,38 +82,32 @@ space = {
     "images":[],
     "disabled":False}
 
-print(space.keys())
-print(space.items())
+#print(space.keys())
+#print(space.items())
 
-response_space = session.post(url_space, json= space)
-print(response_space.text)
-type_id = json.loads(response_space.text)["id"]
+#response_space = session.post(url_space, json= space)
+#print(response_space.text)
+#type_id = json.loads(response_space.text)["id"]
 #type_id = 321
 
 url2 = "http://dev.getdesk.com/xhr/booking"
 booking = {
     "booking_office_space_ids_count": [
         {
-            "id": type_id,
+            "id": 319,
             "count": 1
         }
     ],
-    "booking_begin": "2023-9-10T12:15:00",
-    "booking_end": "2023-9-15T12:15:00",
+    "booking_begin": "2023-9-16T12:15:00",
+    "booking_end": "2023-9-18T12:15:00",
     "localtime": "2023-9-15T12:15:00"
 }
-reserv = session.post(url2, json=booking, data = datas, headers = headers)
-print(reserv.text)
-booking_id = json.loads(reserv.text)["id"]
-print(booking_id)
+#reserv = session.post(url2, json=booking)
+#print(reserv)
+#booking_id = json.loads(reserv.text)["id"]
+#print(booking_id)
 
 
 resp_booking = session.get("http://dev.getdesk.com/xhr/order/90").text
 datesRange = json.loads(resp_booking)["datesRange"]
-
-print(datesRange)
-
-
-
-
-
+print(datesRange) 
